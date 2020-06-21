@@ -1,8 +1,4 @@
 import random
-import string
-from openpyxl import load_workbook
-import pyperclip
-import names
 
 
 
