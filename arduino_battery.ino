@@ -8,7 +8,6 @@ int clt_ind = 1;
 const int N = 130;
 float VL[N];
 float Vc[N];
-//float current_i[N];
 unsigned long t_vec[N];
 float c = 0.0001;
 float R;
@@ -40,17 +39,6 @@ void loop() {
       Vc[n] = analogRead(cappin)/1023.0*5.0;
       delayMicroseconds(50);
     }
-    //Serial.println(total_time);
- 
-
-
-//    for (int n = 0; n < N; n++)
-//    {
-//      //voltage value mapping
-//      VL[n] = fmap(VL[n], 0, 1023, 0.0, 5.0);
-//      Vc[n] = fmap(Vc[n], 0, 1023, 0.0, 5.0);
-//      Serial.println(Vc[n],4);
-//    }
 
 
     //Finding the maximum voltage and index
@@ -78,20 +66,6 @@ void loop() {
       }
     }
 
-    //Calculation of discretization of current and replace Vc[n] = i[n] for low memory
-//    for (int n = 0; n < N; n++)
-//    {
-//      Vc[n] = c * ((Vc[n+1] - Vc[n]) / ((t_vec[n+1] - t_vec[n]) * 0.000001));
-//      //current_i[n] = c * ((Vc[n] - Vc[n-1]) / 0.0004);
-//      //Serial.println(t_vec[n]);
-//      
-//      Serial.println(Vc[n],4);
-//    }
-    // shift n for current. i,tmax[n+1] occurs at vmax[n]?
-    // find the maximum and minium current
-    // Vc is now having i, current data
-    //I_Vmax = Vc[idx_max];
-    //I_Vmin = Vc[idx_min];
 
     Serial.println("Time(us)   VL   Vc");
     Serial.println("-------------------------------------");
@@ -109,7 +83,6 @@ void loop() {
     
     I_Vmax  = c*((Vc[idx_max+1] - Vc[idx_max-1])/((t_vec[idx_max+1] - t_vec[idx_max-1]) * 0.000001));
     I_Vmin  = c*((Vc[idx_min+1] - Vc[idx_min-1])/((t_vec[idx_min+1] - t_vec[idx_min-1]) * 0.000001));
-    //R = (Vmax - Vmin) / (I_Vmax - I_Vmin);
     R = (Vmin - Vmax) / (I_Vmax - I_Vmin);
 
     Serial.print("Vmax: ");
@@ -127,8 +100,3 @@ void loop() {
   }
 
 }
-
-//float fmap(float x, float in_min, float in_max, float out_min, float out_max)
-//{
-//  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-//}
