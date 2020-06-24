@@ -15,7 +15,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name('cred.json', scop
 gc = gspread.authorize(credentials)
 
 # Create a new document
-doc = gc.create('테스트 문서')
+doc = gc.create('New Document')
 # share the document with the email owner
 doc.share('your_email@gmail.com', perm_type='user', role='owner')
 
